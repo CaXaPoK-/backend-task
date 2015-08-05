@@ -17,6 +17,7 @@ class ContentController extends Controller
     public function __construct ()
     {
         $categories = Category::query()
+            ->where('active', '=', '1')
             ->get();
 
         \View::share('categories', $categories);
@@ -25,6 +26,7 @@ class ContentController extends Controller
     public function index()
     {
         $articles = Content::query()
+            ->where('active', '=', '1')
             ->orderBy('publish_at', 'desc')
             ->limit(3)
             ->get();
@@ -45,6 +47,7 @@ class ContentController extends Controller
 
         $articles = Content::query()
             ->where('category_id', '=', $category->id)
+            ->where('active', '=', '1')
             ->orderBy('publish_at', 'desc')
             ->paginate(1);
 
